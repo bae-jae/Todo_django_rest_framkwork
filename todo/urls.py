@@ -18,4 +18,5 @@ from . import views
 urlpatterns = [
     path('list/', views.TodoAPI.as_view()),
     path('detail/', views.TodoDetailAPI.as_view()),
+    path('detail/<int:pk>/', views.TodoDetailAPI.as_view()),
 ]

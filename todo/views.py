@@ -12,7 +12,6 @@ class TodoAPI(APIView):
     def get(self, request):
         todos = Todo.objects.filter(complete=False)
         serializer = TodoSimpleSerializer(todos, many=True)
-        print(serializer.data)
         return Response(serializer.data, status.HTTP_200_OK)
 
     def post(self, request):
@@ -21,7 +20,6 @@ class TodoAPI(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status.HTTP_201_CREATED)
-
         return Response(serializer.data, status.HTTP_400_BAD_REQUEST)
 
 class TodoDetailAPI(APIView):
@@ -30,3 +28,17 @@ class TodoDetailAPI(APIView):
         serializer = TodoDetailSerializer(todos, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
 
+    def put(self, request, pk):
+        print(pk)
+        todo = Todo.objects.filter(id=pk)
+        serializer = TodoCreateSerializer(todo, data=request.data)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status.HTTP_200_OK)
+
+        return Response(serializer.data, status.HTTP_400_BAD_REQUEST)
+
+
+
+        
